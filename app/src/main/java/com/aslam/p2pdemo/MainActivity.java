@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName className, IBinder service) {
 
             p2pService = (MyP2PService) MyP2PService.from(service);
-            p2pController = p2pService.p2pController;
+            p2pController = p2pService.getP2PController();
 
             setTitle(p2pController.getConnectionType().toString());
 

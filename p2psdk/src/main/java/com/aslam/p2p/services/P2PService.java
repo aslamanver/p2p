@@ -8,7 +8,7 @@ import com.aslam.p2p.R;
 
 public abstract class P2PService extends BaseForegroundService implements P2PControllerListener {
 
-    public P2PController p2pController;
+    private P2PController p2pController;
 
     @Override
     public void onCreate() {
@@ -28,6 +28,10 @@ public abstract class P2PService extends BaseForegroundService implements P2PCon
         ServiceBuilder serviceBuilder = new ServiceBuilder(3005, "P2PService_Service_ID", "P2PService Service Channel");
         Notification notification = createNotification(serviceBuilder, "P2PService", "P2PService", R.drawable.ic_stat_settings_remote, R.drawable.ic_launcher, null);
         return serviceBuilder.build(notification);
+    }
+
+    public P2PController getP2PController() {
+        return p2pController;
     }
 
     @Override
