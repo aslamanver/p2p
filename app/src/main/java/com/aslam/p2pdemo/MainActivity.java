@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             binding.listView.setAdapter(deviceAdapter);
-            // p2pService.printLogs();
+            p2pService.onConsoleLog("onServiceConnected");
         }
 
         @Override

@@ -76,8 +76,6 @@ public class P2PController {
 
             if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
 
-                // if (isWebSocketConnected()) return;
-
                 int state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1);
 
                 if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
@@ -92,7 +90,9 @@ public class P2PController {
                     consoleLog("Wi-Fi P2P is not enabled");
                     isP2PEnabled = false;
                     getControllerListener().onP2PStateChanged(state);
-                    // if (!wifiManager.isWifiEnabled()) wifiManager.setWifiEnabled(true);
+                    // if (!wifiManager.isWifiEnabled()) {
+                    //     wifiManager.setWifiEnabled(true);
+                    // }
                 }
 
             } else if (WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION.equals(action)) {
@@ -100,19 +100,36 @@ public class P2PController {
                 int state = intent.getIntExtra(WifiP2pManager.EXTRA_DISCOVERY_STATE, -1);
 
                 if (state == WifiP2pManager.WIFI_P2P_DISCOVERY_STARTED) {
+
                     consoleLog("Wifi P2P discovery started");
                     getControllerListener().onDiscoverChanged(state);
+                    if (getConnectionType() == ConnectionType.CLIENT) {
+                        p2pManager.requestConnectionInfo(p2pChannel, new WifiP2pManager.ConnectionInfoListener() {
+                            @Override
+                            public void onConnectionInfoAvailable(WifiP2pInfo info) {
+                                if (info.groupFormed && !isWebSocketClientConnected()) {
+                                    startWebSocketClient(info.groupOwnerAddress.getHostAddress());
+                                }
+                            }
+                        });
+                    }
+
                 } else {
+
                     consoleLog("Wifi P2P discovery stopped");
                     getControllerListener().onDiscoverChanged(state);
-                    p2pManager.requestConnectionInfo(p2pChannel, new WifiP2pManager.ConnectionInfoListener() {
-                        @Override
-                        public void onConnectionInfoAvailable(WifiP2pInfo info) {
-                            if (!info.groupFormed) {
-                                discoverPeers(1);
+                    if (getConnectionType() == ConnectionType.CLIENT) {
+                        p2pManager.requestConnectionInfo(p2pChannel, new WifiP2pManager.ConnectionInfoListener() {
+                            @Override
+                            public void onConnectionInfoAvailable(WifiP2pInfo info) {
+                                if (info.groupFormed && !isWebSocketClientConnected()) {
+                                    startWebSocketClient(info.groupOwnerAddress.getHostAddress());
+                                } else if (!info.groupFormed) {
+                                    discoverPeers(1);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
 
             } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
@@ -134,21 +151,22 @@ public class P2PController {
 
                             consoleLog("peerDevice ---> " + device.deviceName + " " + getStatusText(device.status));
 
-                            if (!info.groupFormed
-                                    && device.status != WifiP2pDevice.CONNECTED
-                                    && getConnectionType() == ConnectionType.CLIENT
-                                    && dataCenter.connectedDeviceAddress != null
-                                    && device.deviceAddress.equals(dataCenter.connectedDeviceAddress)) {
+                            if (getConnectionType() == ConnectionType.CLIENT) {
 
-                                connectDevice(device);
+                                if (!info.groupFormed
+                                        && device.status != WifiP2pDevice.CONNECTED
+                                        && dataCenter.connectedDeviceAddress != null
+                                        && device.deviceAddress.equals(dataCenter.connectedDeviceAddress)) {
 
-                            } else if (getConnectionType() == ConnectionType.CLIENT && device.status == WifiP2pDevice.CONNECTED && info.groupOwnerAddress != null) {
+                                    connectDevice(device);
 
-                                consoleLog("peerDevice ---> " + device.deviceName + " already connected");
-                                startWebSocketClient(info.groupOwnerAddress.getHostAddress());
+                                } else if (info.groupFormed
+                                        && device.status == WifiP2pDevice.CONNECTED
+                                        && info.groupOwnerAddress != null) {
 
-                            } else if (getConnectionType() == ConnectionType.CLIENT && !info.groupFormed) {
-                                // discoverPeers(1000);
+                                    consoleLog("peerDevice ---> " + device.deviceName + " already connected");
+                                    startWebSocketClient(info.groupOwnerAddress.getHostAddress());
+                                }
                             }
                         }
                     }
@@ -238,9 +256,8 @@ public class P2PController {
         setDeviceName();
         if (getConnectionType() == ConnectionType.SERVER) {
             createGroup();
-        } else {
-            discoverPeers(100);
         }
+        discoverPeers(100);
     }
 
     public void requestConnectionInfo() {
@@ -567,15 +584,17 @@ public class P2PController {
 
     public void startWebSocketClient(final String host) {
 
-        consoleLog("startWebSocketClient: " + host);
-
         if (webSocketClient != null && webSocketClient.isConnecting()) {
+            consoleLog("startWebSocketClient: isConnecting " + host);
             return;
         }
 
         if (webSocketClient != null && webSocketClient.isOpen() && webSocketClient.host.equals(host)) {
+            consoleLog("startWebSocketClient: isOpen " + host);
             return;
         }
+
+        consoleLog("startWebSocketClient: " + host);
 
         stopWebSocketClient();
 
@@ -626,6 +645,7 @@ public class P2PController {
                 }
             });
 
+            webSocketClient.setReuseAddr(true);
             webSocketClient.connect();
 
         } catch (URISyntaxException e) {
