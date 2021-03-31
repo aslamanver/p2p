@@ -399,6 +399,10 @@ public class MainActivity extends AppCompatActivity {
 
 ### Demonstration
 
+* [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo)
+* [P2P Client APK](https://github.com/aslamanver/p2p/tree/master/demo)
+* [P2P Server APK](https://github.com/aslamanver/p2p/tree/master/demo)
+
 [![Screenshot](/screenshots/1.gif)](#demonstration)
 
 <hr/>
