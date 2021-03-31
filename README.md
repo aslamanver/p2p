@@ -10,7 +10,7 @@ This library provides instant integration (PnP) support for WIFI-Direct P2P for 
 
 ### Demonstration
 
-[![Screenshot](/screenshots/1.gif)](/screenshots/1.gif)
+[![Screenshot](/screenshots/1.gif)](#)
 
 ### Initialization
 
