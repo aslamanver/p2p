@@ -390,6 +390,5 @@ public class MainActivity extends AppCompatActivity {
 
 #### References
 
-[Bound services overview](https://developer.android.com/guide/components/bound-services)
-
+[Bound services overview](https://developer.android.com/guide/components/bound-services) <br/>
 [Wi-Fi Direct (peer-to-peer or P2P) overview](https://developer.android.com/guide/topics/connectivity/wifip2p)
