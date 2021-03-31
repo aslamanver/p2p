@@ -18,7 +18,7 @@ implementation 'com.aslam:p2p:1.0.5'
 
 #### 1. Service Usage
 
-Create an Android service that should be extended from `P2PService`, this is an abstract class that let you implement the below methods in `MyP2PService` class.
+Create an Android service that is extended from `P2PService`, this is an abstract class that let you implement the below methods in your `MyP2PService` class.
 
 ```java
 public class MyP2PService extends P2PService {
