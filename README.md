@@ -16,7 +16,7 @@ Add the below dependency into your module level `build.gradle` file.
 implementation 'com.aslam:p2p:1.0.5'
 ```
 
-#### 1. Service Usage
+### 1. Service Usage
 
 Create an Android service that is extended from `P2PService`, this is an abstract class that let you implement the below methods in your `MyP2PService` class.
 
@@ -85,7 +85,7 @@ getP2PController().connectDevice(peers.get(i));
 
 <hr/>
 
-#### 2. Bind Service with Activity
+### 2. Bind Service with Activity
 
 The below explanation can guide you to establish the communication between the `P2PService` and activity.
 
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-#### 3. Controller Usage (Advanced)
+### 3. Controller Usage (Advanced)
 
 If you are going to handle the background processes manually rather than a service class then implement the `P2PController` from your activity or service.
 
@@ -408,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
 
 <hr/>
 
-#### References
+### References
 
 * [Bound services overview](https://developer.android.com/guide/components/bound-services)
 * [Wi-Fi Direct (peer-to-peer or P2P) overview](https://developer.android.com/guide/topics/connectivity/wifip2p)
