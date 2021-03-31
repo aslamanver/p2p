@@ -397,6 +397,8 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+<hr/>
+
 ### Demonstration
 
 * [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo)
