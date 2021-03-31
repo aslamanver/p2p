@@ -1,0 +1,3 @@
+include ':p2psdk'
+include ':app'
+rootProject.name = "P2PDemo"
