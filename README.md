@@ -60,10 +60,8 @@ Specify the <service> element in your app's manifest.
 Start `MyP2PService` on the activity `onStart` method.
 
 ```java
-// Enable DEBUG
-Const.DEBUG_MODE = true;
-// If the device should be a server change the connection type to SERVER
-Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
+Const.DEBUG_MODE = true; // Enable DEBUG
+Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT; // If the device should be a server, change the connection type to SERVER
 MyP2PService.start(this, MyP2PService.class);
 ```
 
