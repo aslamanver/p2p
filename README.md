@@ -6,7 +6,11 @@
 
 Wi-Fi Direct (P2P) allows Android 4.0 (API level 14) and higher devices with the appropriate hardware to connect directly to each other via Wi-Fi without an intermediate access point.
 
-This library provides instant integration (PnP) support for WIFI-Direct P2P into any Android projects plus it remembers the recently connected device and reconnects it automatically when it's available.
+This library provides instant integration (PnP) support for WIFI-Direct P2P for any Android projects plus it remembers the recently connected device and reconnects it automatically when it's available.
+
+### Demonstration
+
+[![Screenshot](/screenshots/1.gif)](/screenshots/1.gif)
 
 ### Initialization
 
