@@ -60,6 +60,10 @@ Specify the <service> element in your app's manifest.
 Start `MyP2PService` on the activity `onStart` method.
 
 ```java
+// Enable DEBUG
+Const.DEBUG_MODE = true;
+// If the device should be a server change the connection type to SERVER
+Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
 MyP2PService.start(this, MyP2PService.class);
 ```
 
@@ -237,7 +241,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        // Enable DEBUG
         Const.DEBUG_MODE = true;
+        // If the device should be a server change the connection type to SERVER
+        Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
         MyP2PService.start(this, MyP2PService.class);
         bindService(new Intent(this, MyP2PService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
