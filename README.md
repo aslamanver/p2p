@@ -77,6 +77,8 @@ In order to connect the Wifi P2P device from `onPeersChanged` device list, `conn
 getP2PController().connectDevice(peers.get(i));
 ```
 
+> `onSocketClientOpened` and `onSocketClientClosed` methods are the indicators of the current session.
+
 <hr/>
 
 #### 2. Bind Service with Activity
