@@ -48,7 +48,7 @@ public class MyP2PService extends P2PService {
 }
 ```
 
-Declare the service in the `AndroidManifest.xml`.
+Specify the <service> element in your app's manifest.
 
 ```xml
 <service
@@ -69,7 +69,7 @@ If the targeted version is above Android 5.1 the permission should be asked on t
 PermissionUtils.askPermission(this);
 ```
 
-That's all now the `MyP2PService` class methods will be called on each P2P event, if any device is discovered nearby the `onPeersChanged` method will be called with the device list.
+That's all now the `MyP2PService` class methods will be called on each P2P event, if any device is discovered nearby the `onPeersChanged` method will be called with the device list that you can notify the adapter.
 
 In order to connect the Wifi P2P device from `onPeersChanged` device list, `connectDevice` method of P2P controller should be called.
 
@@ -77,9 +77,11 @@ In order to connect the Wifi P2P device from `onPeersChanged` device list, `conn
 getP2PController().connectDevice(peers.get(i));
 ```
 
+<hr/>
+
 #### 2. Bind Service with Activity
 
-The below explanation can guide you to establish the communication between the `P2PService` and Activity.
+The below explanation can guide you to establish the communication between the `P2PService` and activity.
 
 Create `P2PControllerActivityListener` activity listener variable and its setter in your service class, execute the same methods on UI thread from activity listener as below
 
@@ -389,4 +391,5 @@ public class MainActivity extends AppCompatActivity {
 #### References
 
 [Bound services overview](https://developer.android.com/guide/components/bound-services)
+
 [Wi-Fi Direct (peer-to-peer or P2P) overview](https://developer.android.com/guide/topics/connectivity/wifip2p)
