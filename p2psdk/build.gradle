@@ -6,7 +6,7 @@ publish {
     repoName = 'android'
     groupId = 'com.aslam'
     artifactId = 'p2p'
-    publishVersion = '1.0.5'
+    publishVersion = '1.0.7'
     desc = 'Android P2P'
     website = 'https://github.com/aslamanver/p2psdk'
 }
@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 105
-        versionName "1.0.5"
+        versionCode 107
+        versionName "1.0.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -45,4 +45,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.code.gson:gson:2.2.4'
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
 }

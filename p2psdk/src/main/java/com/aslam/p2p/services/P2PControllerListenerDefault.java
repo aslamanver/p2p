@@ -3,6 +3,8 @@ package com.aslam.p2p.services;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pInfo;
 
+import com.aslam.p2p.utils.LogUtils;
+
 import java.util.List;
 
 class P2PControllerListenerDefault implements P2PControllerListener {
@@ -105,6 +107,6 @@ class P2PControllerListenerDefault implements P2PControllerListener {
 
     @Override
     public void onConsoleLog(String message) {
-
+        LogUtils.consoleLog("P2PControllerListenerDefault", message);
     }
 }

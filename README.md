@@ -1,4 +1,4 @@
-### Wi-Fi Direct (peer-to-peer or P2P) SDK
+### Wi-Fi Direct (peer-to-peer - P2P)
 
 ![https://i.imgur.com/DHFGWtF.png](https://i.imgur.com/DHFGWtF.png)
 
