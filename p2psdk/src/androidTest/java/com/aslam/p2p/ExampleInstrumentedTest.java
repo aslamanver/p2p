@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.payable.p2p.test", appContext.getPackageName());
+        assertEquals("com.aslam.p2p.test", appContext.getPackageName());
     }
 }
