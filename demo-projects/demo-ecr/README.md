@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/P8L2Oc7.png)
 
-PAYable P2P (Wifi-Direct) SDK - [https://aslamanver.github.io/p2p/demo-projects/demo-ecr](https://aslamanver.github.io/p2p/demo-projects/demo-ecr)
+PAYable P2P (Wifi-Direct) - [SDK](https://aslamanver.github.io/p2p/demo-projects/demo-ecr)
 
 <hr>
 
