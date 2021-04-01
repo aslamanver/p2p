@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Const.DEBUG_MODE = true;
         MyP2PService.start(this, MyP2PService.class);
         MyP2PService.bindService(this, MyP2PService.class, mConnection);
     }
@@ -162,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        Const.DEBUG_MODE = true;
 
         if (P2PController.getConnectionType(this) == P2PController.ConnectionType.CLIENT) {
             binding.btnCreateGroup.setVisibility(View.GONE);

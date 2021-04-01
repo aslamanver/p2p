@@ -252,10 +252,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Enable DEBUG
-        Const.DEBUG_MODE = true;
-        // If the device should be a server change the connection type to SERVER
-        Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
         MyP2PService.start(this, MyP2PService.class);
         MyP2PService.bindService(this, MyP2PService.class, mConnection);
     }
@@ -276,6 +272,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Enable DEBUG
+        Const.DEBUG_MODE = true;
+        // If the device should be a server change the connection type to SERVER
+        Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
     }
 }
 ```
@@ -293,6 +294,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Enable DEBUG
+        Const.DEBUG_MODE = true;
+        // If the device should be a server change the connection type to SERVER
+        Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
 
         p2pController = new P2PController(this, new P2PControllerListener() {
 
