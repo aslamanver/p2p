@@ -101,9 +101,9 @@ public class MyWebSocketClient extends WebSocketClient {
         return isConnected;
     }
 
-    public void forceClose() {
+    public void forceClose(String reason) {
         setReconnect(false);
-        close();
+        close(1009, reason);
     }
 
     public void consoleLog(String message) {

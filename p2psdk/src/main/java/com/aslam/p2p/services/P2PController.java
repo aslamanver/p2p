@@ -458,8 +458,8 @@ public class P2PController {
                 @Override
                 public void onSuccess() {
                     consoleLog("cancelConnect: onSuccess " + device.deviceName);
-                    stopWebSocketClient();
                     removeGroup();
+                    stopWebSocketClient();
                     discoverPeers(1);
                     getControllerListener().onDeviceDisconnected(device);
                 }
@@ -467,8 +467,8 @@ public class P2PController {
                 @Override
                 public void onFailure(int reason) {
                     consoleLog("cancelConnect: onFailure " + device.deviceName);
-                    stopWebSocketClient();
                     removeGroup();
+                    stopWebSocketClient();
                     discoverPeers(1);
                     if (reason == 2) {
                         getControllerListener().onDeviceDisconnected(device);
@@ -627,7 +627,7 @@ public class P2PController {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    if (!webSocketClient.isOpen()) {
+                    if ((webSocketClient != null && !webSocketClient.isOpen()) || (reason != null && reason.equals("STATUS_FORCE_CLOSE"))) {
                         consoleLog("WebSocket: closed with exit code " + code + " additional info: " + reason);
                         getControllerListener().onSocketClientClosed(host, code, reason, remote);
                         p2pManager.requestConnectionInfo(p2pChannel, new WifiP2pManager.ConnectionInfoListener() {
@@ -638,6 +638,8 @@ public class P2PController {
                                 }
                             }
                         });
+                    } else {
+                        System.out.println("");
                     }
                 }
 
@@ -668,7 +670,7 @@ public class P2PController {
 
     public void stopWebSocketClient() {
         if (webSocketClient != null) {
-            webSocketClient.forceClose();
+            webSocketClient.forceClose("STATUS_FORCE_CLOSE");
             webSocketClient = null;
             consoleLog("WebSocket Client stopped");
         }
