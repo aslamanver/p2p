@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.android:flexbox:2.0.1'
-    implementation('lk.payable:p2p:1.1.4') {
+    implementation('com.github.aslamanver:p2p:1.1.5') {
         // exclude the dependencies, if ecr-1.1.jar is added
         exclude group: "com.google.code.gson"
         exclude group: "org.java-websocket"

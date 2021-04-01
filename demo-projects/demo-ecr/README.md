@@ -34,7 +34,7 @@ allprojects {
 1.3 Add the below dependency into your app level `build.gradle` file.
 
 ```gradle
-implementation('lk.payable:p2p:1.1.4') {
+implementation('com.github.aslamanver:p2p:1.1.5') {
     exclude group: "com.google.code.gson"
     exclude group: "org.java-websocket"
 }

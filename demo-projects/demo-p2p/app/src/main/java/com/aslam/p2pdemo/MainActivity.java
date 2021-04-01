@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         Const.DEBUG_MODE = true;
-        // Const.CONNECTION_TYPE = P2PController.ConnectionType.SERVER;
+        // Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
 
         if (P2PController.getConnectionType(this) == P2PController.ConnectionType.CLIENT) {
             binding.btnCreateGroup.setVisibility(View.GONE);
