@@ -450,21 +450,29 @@ public class P2PController {
 
         if (device.status == WifiP2pDevice.INVITED || device.status == WifiP2pDevice.CONNECTED) {
 
+            dataCenter.connectedDeviceAddress = null;
+            StorageHelper.storeDataCenter(mContext, dataCenter);
+
             p2pManager.cancelConnect(p2pChannel, new WifiP2pManager.ActionListener() {
 
                 @Override
                 public void onSuccess() {
                     consoleLog("cancelConnect: onSuccess " + device.deviceName);
-                    dataCenter.connectedDeviceAddress = null;
-                    StorageHelper.storeDataCenter(mContext, dataCenter);
+                    removeGroup();
                     discoverPeers(1);
                     getControllerListener().onDeviceDisconnected(device);
                 }
 
                 @Override
                 public void onFailure(int reason) {
-                    consoleLog("cancelConnect: onSuccess " + device.deviceName);
-                    getControllerListener().onDeviceNotDisconnected(reason);
+                    consoleLog("cancelConnect: onFailure " + device.deviceName);
+                    removeGroup();
+                    discoverPeers(1);
+                    if (reason == 2) {
+                        getControllerListener().onDeviceDisconnected(device);
+                    } else {
+                        getControllerListener().onDeviceNotDisconnected(reason);
+                    }
                 }
             });
 
