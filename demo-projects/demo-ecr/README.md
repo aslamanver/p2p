@@ -276,6 +276,11 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-Refer this repository to learn more.
+[![Screenshot](/screenshots/1.gif)](#demonstration)
 
-*PAYable ECR SDKs Integration*
+<hr/>
+
+Refer the below documentation for advanced usages.
+
+* [PAYable ECR SDKs](https://ecr-git-demo.payable.lk)
+* [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p)
