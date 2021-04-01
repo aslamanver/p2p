@@ -691,6 +691,10 @@ public class P2PController {
         return webSocketClient != null && webSocketClient.isOpen();
     }
 
+    public String getWebSocketClientHost() {
+        return isWebSocketClientConnected() ? webSocketClient.host : null;
+    }
+
     public boolean isWebSocketServerConnected() {
         return webSocketServer != null;
     }

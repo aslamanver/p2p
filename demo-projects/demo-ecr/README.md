@@ -1,33 +1,48 @@
-package com.aslam.p2pdemo;
+### PAYable P2P (Wifi-Direct) ECR SDKs - ECR Integration
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.wifi.p2p.WifiP2pDevice;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.view.View;
+![](https://i.imgur.com/P8L2Oc7.png)
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
 
-import com.aslam.p2p.adapters.P2PDeviceAdapter;
-import com.aslam.p2p.services.P2PController;
-import com.aslam.p2p.services.P2PControllerActivityListener;
-import com.aslam.p2p.utils.Const;
-import com.aslam.p2p.utils.LogUtils;
-import com.aslam.p2p.utils.PermissionUtils;
-import com.aslam.p2pdemo.databinding.ActivityMainBinding;
-import com.aslam.p2pdemo.services.MyP2PService;
+<hr>
 
-import java.util.List;
-import java.util.Random;
+### Integration 
 
+Make sure the ECR payment service is running on the terminal as below in the notification bar. 
+
+![](https://i.imgur.com/agTUUmw.png)
+
+The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
+
+The server is implemented based on these WebSocket protocol versions
+
+* [RFC 6455](https://tools.ietf.org/html/rfc6455) 
+* [RFC 7692](https://tools.ietf.org/html/rfc7692)
+
+Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to write your WebSocket client or use any libraries available based on the above protocol versions.
+
+#### 1. Initialization
+
+1.1 Include the JAR file into your Android project as per the [Java SDK Integration](https://github.com/payable/ecr-sdks/blob/master/README.md#java-sdk-integration) docs.
+1.2 Add the below dependency into your app level `build.gradle` file.
+
+```gradle
+implementation('com.aslam:p2p:1.0.7') {
+    exclude group: "com.google.code.gson"
+    exclude group: "org.java-websocket"
+}
+```
+
+1.3 Follow the [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p) documentation to connect the terminal through WIFI-P2P Network.
+
+1.4 Once it is connected through WIFI-P2P Network `onSocketClientOpened` method will be called with host IP address, now from there you can initiate the ECRTerminal connection to the host IP address.
+
+#### 2. Demonstration
+
+```java
 public class MainActivity extends AppCompatActivity {
 
+    ECRTerminal ecrTerminal;
     ActivityMainBinding binding;
     boolean permissionGranted;
     MyDeviceAdapter deviceAdapter;
@@ -62,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onSocketClientOpened(final String host) {
+                    String address = host.split(":")[0].replace("/", "");
+                    connectECR(address);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -73,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onSocketClientClosed(String host, int code, String reason, boolean remote) {
+                    disconnectECR();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -166,22 +184,74 @@ public class MainActivity extends AppCompatActivity {
         binding.btnSocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = String.valueOf(new Random().nextInt(1000));
-                if (P2PController.getConnectionType(getApplicationContext()) == P2PController.ConnectionType.CLIENT && p2pController.isWebSocketClientConnected()) {
-                    p2pController.send(P2PController.ConnectionType.CLIENT, message);
-                    p2pService.onConsoleLog("WebSocket: sent " + message);
-                } else if (p2pController.isWebSocketServerConnected()) {
-                    p2pController.send(P2PController.ConnectionType.SERVER, message);
-                    p2pService.onConsoleLog("WebSocket: sent " + message);
-                }
+                double amount = new Random().nextInt(1000);
+                PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, new Random().nextInt(100), amount, PAYableRequest.METHOD_CARD);
+                ecrTerminal.send(request.toJson());
             }
         });
+    }
+
+    private void connectECR(String host) {
+
+        try {
+
+            disconnectECR();
+
+            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-POS", new ECRTerminal.Listener() {
+
+                @Override
+                public void onOpen(String data) {
+                    p2pService.onConsoleLog("ECRTerminal onOpen: " + data);
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    p2pService.onConsoleLog("ECRTerminal onClose: " + reason);
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    p2pService.onConsoleLog("ECRTerminal onMessage: " + message);
+                }
+
+                @Override
+                public void onMessage(ByteBuffer message) {
+                    p2pService.onConsoleLog("ECRTerminal onMessage: " + message);
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    p2pService.onConsoleLog("ECRTerminal onError: " + ex);
+                }
+            });
+
+            ecrTerminal.setReuseAddr(true);
+            ecrTerminal.setConnectionLostTimeout(15);
+            ecrTerminal.connect();
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void disconnectECR() {
+        try {
+            if (ecrTerminal != null && ecrTerminal.isOpen()) {
+                ecrTerminal.close(1009, "STATUS_DISCONNECTED");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        p2pService.setActivityListener(null);
+        disconnectECR();
     }
 
     protected void onResume() {
@@ -198,3 +268,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+```
+
+Refer this repository to learn more.
+
+*PAYable ECR SDKs Integration*
