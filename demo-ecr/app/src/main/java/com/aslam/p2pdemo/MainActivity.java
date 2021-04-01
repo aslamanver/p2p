@@ -23,11 +23,18 @@ import com.aslam.p2p.utils.PermissionUtils;
 import com.aslam.p2pdemo.databinding.ActivityMainBinding;
 import com.aslam.p2pdemo.services.MyP2PService;
 
+import org.payable.ecr.ECRTerminal;
+import org.payable.ecr.PAYableRequest;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    ECRTerminal ecrTerminal;
     ActivityMainBinding binding;
     boolean permissionGranted;
     MyDeviceAdapter deviceAdapter;
@@ -62,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onSocketClientOpened(final String host) {
+                    String address = host.split(":")[0].replace("/", "");
+                    connectECR(address);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onSocketClientClosed(String host, int code, String reason, boolean remote) {
+                    disconnectECR();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -165,22 +175,75 @@ public class MainActivity extends AppCompatActivity {
         binding.btnSocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = String.valueOf(new Random().nextInt(1000));
-                if (P2PController.getConnectionType(getApplicationContext()) == P2PController.ConnectionType.CLIENT && p2pController.isWebSocketClientConnected()) {
-                    p2pController.send(P2PController.ConnectionType.CLIENT, message);
-                    p2pService.onConsoleLog("WebSocket: sent " + message);
-                } else if (p2pController.isWebSocketServerConnected()) {
-                    p2pController.send(P2PController.ConnectionType.SERVER, message);
-                    p2pService.onConsoleLog("WebSocket: sent " + message);
-                }
+                double amount = new Random().nextInt(1000);
+                PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, new Random().nextInt(100), amount, PAYableRequest.METHOD_CARD);
+                ecrTerminal.send(request.toJson());
             }
         });
+    }
+
+    private void connectECR(String host) {
+
+        try {
+
+            disconnectECR();
+
+            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-POS", new ECRTerminal.Listener() {
+
+                @Override
+                public void onOpen(String data) {
+                    p2pService.onConsoleLog("ECRTerminal onOpen: " + data);
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    p2pService.onConsoleLog("ECRTerminal onClose: " + reason);
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    p2pService.onConsoleLog("ECRTerminal onMessage: " + message);
+                }
+
+                @Override
+                public void onMessage(ByteBuffer message) {
+                    p2pService.onConsoleLog("ECRTerminal onMessage: " + message);
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    p2pService.onConsoleLog("ECRTerminal onError: " + ex);
+                }
+            });
+
+            ecrTerminal.setReuseAddr(true);
+            ecrTerminal.setConnectionLostTimeout(15);
+            ecrTerminal.connect();
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void disconnectECR() {
+        try {
+            if (ecrTerminal != null && ecrTerminal.isOpen()) {
+                ecrTerminal.close(1009, "STATUS_DISCONNECTED");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         p2pService.setActivityListener(null);
+        disconnectECR();
     }
 
     protected void onResume() {
