@@ -24,7 +24,7 @@ allprojects {
 2. Add the below dependency into your module level `build.gradle` file.
 
 ```gradle
-implementation 'com.github.aslamanver:p2p:1.1.3'
+implementation 'com.github.aslamanver:p2p:1.1.4'
 ```
 
 ### 1. Service Usage

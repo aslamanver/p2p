@@ -6,7 +6,7 @@ publish {
     repoName = 'android'
     groupId = 'com.aslam'
     artifactId = 'p2p'
-    publishVersion = '1.1.2'
+    publishVersion = '1.1.4'
     desc = 'Android P2P'
     website = 'https://github.com/aslamanver/p2psdk'
 }
@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 112
-        versionName "1.1.2"
+        versionCode 114
+        versionName "1.1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
