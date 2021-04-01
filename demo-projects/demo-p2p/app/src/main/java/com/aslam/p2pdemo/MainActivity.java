@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+        p2pService.setActivityListener(null);
         unbindService(mConnection);
     }
 
