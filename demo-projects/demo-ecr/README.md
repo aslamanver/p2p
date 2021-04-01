@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/P8L2Oc7.png)
 
-ECR SDKs - [ecr-git-demo.payable.lk](https://ecr-git-demo.payable.lk/)
+PAYable P2P (Wifi-Direct) SDK - [https://aslamanver.github.io/p2p/demo-projects/demo-ecr](https://aslamanver.github.io/p2p/demo-projects/demo-ecr)
 
 <hr>
 
@@ -23,19 +23,33 @@ Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/W
 
 #### 1. Initialization
 
-1.1 Include the JAR file into your Android project as per the [Java SDK Integration](https://github.com/payable/ecr-sdks/blob/master/README.md#java-sdk-integration) docs.
-1.2 Add the below dependency into your app level `build.gradle` file.
+1.1 Include the JAR file into your Android project as per the [Java ECR SDK Integration](https://ecr-git-demo.payable.lk/#java-sdk-integration) docs.
+
+1.2 Add the below repository into your project level `build.gradle` file.
 
 ```gradle
-implementation('com.aslam:p2p:1.0.7') {
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+1.3 Add the below dependency into your app level `build.gradle` file.
+
+```gradle
+implementation('lk.payable:p2p:1.1.3') {
     exclude group: "com.google.code.gson"
     exclude group: "org.java-websocket"
 }
 ```
 
-1.3 Follow the [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p) documentation to connect the terminal through WIFI-P2P Network.
+1.4 Follow the [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p) documentation to connect the terminal through WIFI-P2P Network.
 
-1.4 Once it is connected through WIFI-P2P Network `onSocketClientOpened` method will be called with host IP address, now from there you can initiate the ECRTerminal connection to the host IP address.
+1.5 Once it is connected through WIFI-P2P Network `onSocketClientOpened` method will be called along with the connected host IP address, now from there you can initiate the ECRTerminal connection to the host IP address.
+
+1.6 Implement the [Java ECR SDK Integration](https://ecr-git-demo.payable.lk/#java-sdk-integration) to connect the ECR Terminal.
 
 #### 2. Demonstration
 
