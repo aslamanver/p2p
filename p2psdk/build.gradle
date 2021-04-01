@@ -1,15 +1,4 @@
-apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
-
-publish {
-    userOrg = 'aslam'
-    repoName = 'android'
-    groupId = 'com.aslam'
-    artifactId = 'p2p'
-    publishVersion = '1.1.4'
-    desc = 'Android P2P'
-    website = 'https://github.com/aslamanver/p2psdk'
-}
 
 android {
     compileSdkVersion 30

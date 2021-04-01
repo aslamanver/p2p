@@ -377,6 +377,39 @@ public class P2PController {
         });
     }
 
+    public void recreateGroup() {
+        p2pManager.requestGroupInfo(p2pChannel, new WifiP2pManager.GroupInfoListener() {
+            @Override
+            public void onGroupInfoAvailable(WifiP2pGroup group) {
+
+                if (group != null) {
+
+                    p2pManager.removeGroup(p2pChannel, new WifiP2pManager.ActionListener() {
+
+                        @Override
+                        public void onSuccess() {
+                            consoleLog("removeGroup: onSuccess");
+                            getControllerListener().onGroupRemoved(10);
+                            createGroup();
+                        }
+
+                        @Override
+                        public void onFailure(int reason) {
+                            consoleLog("removeGroup: onFailure");
+                            getControllerListener().onGroupRemoved(-10);
+                            createGroup();
+                        }
+                    });
+
+                } else {
+                    consoleLog("group is already removed");
+                    getControllerListener().onGroupRemoved(20);
+                    createGroup();
+                }
+            }
+        });
+    }
+
     private Runnable getDiscoverRunnable() {
 
         return new Runnable() {
@@ -553,7 +586,7 @@ public class P2PController {
             @Override
             public void onClose(WebSocket conn, int code, String reason, boolean remote) {
                 consoleLog("WebSocket: closed " + (conn != null ? conn.getRemoteSocketAddress() : "NULL") + " with exit code " + code + " additional info: " + reason);
-                getControllerListener().onSocketServerConnectionClosed(conn.getRemoteSocketAddress().toString(), code, reason, remote);
+                getControllerListener().onSocketServerConnectionClosed(conn != null && conn.getRemoteSocketAddress() != null ? conn.getRemoteSocketAddress().toString() : null, code, reason, remote);
             }
 
             @Override
