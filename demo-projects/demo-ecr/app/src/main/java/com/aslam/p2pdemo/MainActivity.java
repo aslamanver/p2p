@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
             disconnectECR();
 
-            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-POS", new ECRTerminal.Listener() {
+            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-" + P2PController.getDeviceSerial(this), new ECRTerminal.Listener() {
 
                 @Override
                 public void onOpen(String data) {
