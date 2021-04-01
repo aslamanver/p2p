@@ -285,6 +285,8 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
+<hr/>
+
 [![Screenshot](/screenshots/1.gif)](#demonstration)
 
 <hr/>
