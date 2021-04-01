@@ -40,7 +40,7 @@ implementation('lk.payable:p2p:1.1.3') {
 }
 ```
 
-1.4 Follow the [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p) documentation to connect the terminal through WIFI-P2P Network.
+1.4 Follow the [Wi-Fi Direct (peer-to-peer - P2P)](https://aslamanver.github.io/p2p#1-service-usage) documentation to connect the terminal through WIFI-P2P Network. (Ignore the Initialization section from P2P Docs)
 
 1.5 Once it is connected through WIFI-P2P Network `onSocketClientOpened` method will be called along with the connected host IP address, now from there you can initiate the ECRTerminal connection to the host IP address.
 
