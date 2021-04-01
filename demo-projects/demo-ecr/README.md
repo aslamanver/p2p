@@ -288,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
 
 <hr/>
 
+* [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo-projects/demo-ecr)
+* [P2P Demo Apps](https://github.com/aslamanver/p2p/tree/master/apks)
+
 [![Screenshot](/screenshots/1.gif)](#demonstration)
 
 <hr/>
