@@ -14,12 +14,7 @@ Make sure the ECR payment service is running on the terminal as below in the not
 
 The connection between the terminal and host system will be established using WebSocket which is running inside the ECR application. 
 
-The server is implemented based on these WebSocket protocol versions
-
-* [RFC 6455](https://tools.ietf.org/html/rfc6455) 
-* [RFC 7692](https://tools.ietf.org/html/rfc7692)
-
-Refer to the Mozilla [WebSocket APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to write your WebSocket client or use any libraries available based on the above protocol versions.
+Refer to the [ECR Documentation](https://payable.github.io/ecr-sdks/) to know more about PAYable ECR implementations.
 
 #### 1. Initialization
 
