@@ -60,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
             setTitle(p2pController.getConnectionType().toString());
 
             if (p2pController.getConnectionType() == P2PController.ConnectionType.CLIENT) {
-                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(p2pController.isWebSocketClientConnected() ? "#008000" : "#FF0000")));
+                if (p2pController.isWebSocketClientConnected()) {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#008000")));
+                    String address = p2pController.getWebSocketClientHost().split(":")[0].replace("/", "");
+                    connectECR(address);
+                } else {
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF0000")));
+                }
             }
 
             p2pService.setActivityListener(new P2PControllerActivityListener() {

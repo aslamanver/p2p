@@ -455,6 +455,9 @@ public class P2PController {
                 @Override
                 public void onSuccess() {
                     consoleLog("cancelConnect: onSuccess " + device.deviceName);
+                    dataCenter.connectedDeviceAddress = null;
+                    StorageHelper.storeDataCenter(mContext, dataCenter);
+                    discoverPeers(1);
                     getControllerListener().onDeviceDisconnected(device);
                 }
 
