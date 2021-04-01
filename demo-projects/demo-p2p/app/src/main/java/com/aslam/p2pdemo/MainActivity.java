@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         Const.DEBUG_MODE = true;
         // Const.CONNECTION_TYPE = P2PController.ConnectionType.CLIENT;
         MyP2PService.start(this, MyP2PService.class);
-        bindService(new Intent(this, MyP2PService.class), mConnection, Context.BIND_AUTO_CREATE);
+        MyP2PService.bindService(this, MyP2PService.class, mConnection);
     }
 
     @Override
