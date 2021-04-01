@@ -178,12 +178,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        p2pService.setActivityListener(null);
-    }
-
     protected void onResume() {
         super.onResume();
         permissionGranted = PermissionUtils.askPermission(this);
