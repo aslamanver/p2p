@@ -10,10 +10,21 @@ This P2P library provides instant integration (PnP) support for WIFI-Direct P2P 
 
 ### Initialization
 
-Add the below dependency into your module level `build.gradle` file.
+1. Add the below repository into your project level build.gradle file.
 
 ```gradle
-implementation 'com.aslam:p2p:1.0.7'
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+2. Add the below dependency into your module level `build.gradle` file.
+
+```gradle
+implementation 'com.github.aslamanver:p2p:1.1.3'
 ```
 
 ### 1. Service Usage
@@ -401,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
 
 ### Demonstration
 
-* [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo)
+* [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo-projects)
 * [P2P Demo Apps](https://github.com/aslamanver/p2p/tree/master/apks)
 
 [![Screenshot](/screenshots/1.gif)](#demonstration)
