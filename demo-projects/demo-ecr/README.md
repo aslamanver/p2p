@@ -16,7 +16,7 @@ The connection between the terminal and host system will be established using We
 
 Refer to the [ECR Documentation](https://payable.github.io/ecr-sdks/) to know more about PAYable ECR implementations.
 
-#### 1. Initialization
+### 1. Initialization
 
 1.1 Include the JAR file into your Android project as per the [Java ECR SDK Integration](https://ecr-git-demo.payable.lk/#java-sdk-integration) docs.
 
@@ -46,7 +46,7 @@ implementation('lk.payable:p2p:1.1.3') {
 
 1.6 Implement the [Java ECR SDK Integration](https://ecr-git-demo.payable.lk/#java-sdk-integration) to connect the ECR Terminal.
 
-#### 2. Demonstration
+### 2. Demonstration
 
 ```java
 public class MainActivity extends AppCompatActivity {
