@@ -202,7 +202,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 double amount = new Random().nextInt(1000);
                 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, new Random().nextInt(100), amount, PAYableRequest.METHOD_CARD);
-                ecrTerminal.send(request.toJson());
+                if (ecrTerminal != null && ecrTerminal.isOpen()) {
+                    ecrTerminal.send(request.toJson());
+                    p2pService.onConsoleLog("Sent to ECRTerminal");
+                } else {
+                    Toast.makeText(getApplicationContext(), "ECRTerminal is not connected", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -213,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
             disconnectECR();
 
-            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-POS", new ECRTerminal.Listener() {
+            ecrTerminal = new ECRTerminal(host, "4DqxynHGtHNckmCrRzvVxkwuSfr8faRmPrLIX0hmkqw=", "ANDROID-" + P2PController.getDeviceSerial(this), new ECRTerminal.Listener() {
 
                 @Override
                 public void onOpen(String data) {

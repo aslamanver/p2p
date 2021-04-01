@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, new Random().nextInt(100), amount, PAYableRequest.METHOD_CARD);
                 if (ecrTerminal != null && ecrTerminal.isOpen()) {
                     ecrTerminal.send(request.toJson());
+                    p2pService.onConsoleLog("Sent to ECRTerminal");
                 } else {
                     Toast.makeText(getApplicationContext(), "ECRTerminal is not connected", Toast.LENGTH_LONG).show();
                 }
