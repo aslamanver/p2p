@@ -290,6 +290,8 @@ public class MainActivity extends AppCompatActivity {
 
 [![Screenshot](/screenshots/1.gif)](#demonstration)
 
+Sample project and APK.
+
 * [Demo Project](https://github.com/aslamanver/p2p/tree/master/demo-projects/demo-ecr)
 * [P2P Demo App](https://github.com/aslamanver/p2p/blob/master/apks/ecr.apk)
 
