@@ -10,6 +10,7 @@ import android.net.wifi.p2p.WifiP2pDevice;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -185,7 +186,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 double amount = new Random().nextInt(1000);
                 PAYableRequest request = new PAYableRequest(PAYableRequest.ENDPOINT_PAYMENT, new Random().nextInt(100), amount, PAYableRequest.METHOD_CARD);
-                ecrTerminal.send(request.toJson());
+                if (ecrTerminal != null && ecrTerminal.isOpen()) {
+                    ecrTerminal.send(request.toJson());
+                } else {
+                    Toast.makeText(getApplicationContext(), "ECRTerminal is not connected", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

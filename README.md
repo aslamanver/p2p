@@ -105,7 +105,7 @@ Create `P2PControllerActivityListener` activity listener variable and its setter
 ```java
 public class MyP2PService extends P2PService {
 
-    private P2PControllerActivityListener activityListener;
+    P2PControllerActivityListener activityListener;
 
     public void setActivityListener(P2PControllerActivityListener activityListener) {
         this.activityListener = activityListener;
@@ -114,48 +114,28 @@ public class MyP2PService extends P2PService {
     @Override
     public void onPeersChanged(List<WifiP2pDevice> peers) {
         if (activityListener != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    activityListener.onPeersChanged(peers);
-                }
-            });
+            activityListener.onPeersChanged(peers);
         }
     }
 
     @Override
     public void onSocketClientOpened(String host) {
         if (activityListener != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    activityListener.onSocketClientOpened(host);
-                }
-            });
+            activityListener.onSocketClientOpened(host);
         }
     }
 
     @Override
     public void onSocketClientClosed(String host, int code, String reason, boolean remote) {
         if (activityListener != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    activityListener.onSocketClientClosed(host, code, reason, remote);
-                }
-            });
+            activityListener.onSocketClientClosed(host, code, reason, remote);
         }
     }
 
     @Override
     public void onSocketClientMessage(String host, String message) {
         if (activityListener != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    activityListener.onSocketClientMessage(host, message);
-                }
-            });
+            activityListener.onSocketClientMessage(host, message);
         }
     }
 
@@ -163,12 +143,7 @@ public class MyP2PService extends P2PService {
     public void onConsoleLog(String message) {
         LogUtils.consoleLog("MyP2PService", message);
         if (activityListener != null) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    activityListener.onConsoleLog(message);
-                }
-            });
+            activityListener.onConsoleLog(message);
         }
     }
 }
