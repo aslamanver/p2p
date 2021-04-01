@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Const.DEBUG_MODE = true;
         MyP2PService.start(this, MyP2PService.class);
-        bindService(new Intent(this, MyP2PService.class), mConnection, Context.BIND_AUTO_CREATE);
+        MyP2PService.bindService(this, MyP2PService.class, mConnection);
     }
 
     @Override

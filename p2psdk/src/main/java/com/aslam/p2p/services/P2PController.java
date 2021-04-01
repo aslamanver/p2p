@@ -638,8 +638,6 @@ public class P2PController {
                                 }
                             }
                         });
-                    } else {
-                        System.out.println("");
                     }
                 }
 

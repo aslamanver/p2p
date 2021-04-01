@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -16,6 +17,8 @@ import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+
+import com.aslam.p2p.utils.Const;
 
 import java.util.List;
 
@@ -120,6 +123,14 @@ public abstract class BaseForegroundService extends Service {
 
     public static void stop(Context context, Class<? extends BaseForegroundService> serviceClass) {
         context.stopService(new Intent(context, serviceClass));
+    }
+
+    public static void bindService(Context context, Class<? extends BaseForegroundService> serviceClass, ServiceConnection connection) {
+        context.bindService(new Intent(context, serviceClass), connection, Context.BIND_AUTO_CREATE);
+    }
+
+    public static void unbindService(Context context, ServiceConnection connection) {
+        context.unbindService(connection);
     }
 
     public static BaseForegroundService from(IBinder service) {
