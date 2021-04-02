@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+        disconnectECR();
         p2pService.setActivityListener(null);
         unbindService(mConnection);
     }
@@ -267,12 +268,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disconnectECR();
     }
 
     protected void onResume() {
