@@ -4,6 +4,8 @@ import android.app.Notification;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pInfo;
 
+import androidx.annotation.CallSuper;
+
 import com.aslam.p2p.R;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     private final List<P2PControllerListener> controllerListeners = new ArrayList<>();
 
     @Override
+    @CallSuper
     public void onCreate() {
         super.onCreate();
         p2pController = new P2PController(this, this);
@@ -22,6 +25,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDestroy() {
         super.onDestroy();
         p2pController.destroy();
@@ -34,15 +38,15 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
         return serviceBuilder.build(notification);
     }
 
-    public P2PController getP2PController() {
+    public final P2PController getP2PController() {
         return p2pController;
     }
 
-    public void addListener(P2PControllerListener controllerListener) {
+    public final void addListener(P2PControllerListener controllerListener) {
         controllerListeners.add(controllerListener);
     }
 
-    public void removeListener(P2PControllerListener controllerListener) {
+    public final void removeListener(P2PControllerListener controllerListener) {
         if (controllerListener == null) {
             controllerListeners.clear();
         } else {
@@ -51,6 +55,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDiscoverChanged(int state) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDiscoverChanged(state);
@@ -58,6 +63,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onP2PStateChanged(int state) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onP2PStateChanged(state);
@@ -65,6 +71,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceChanged(WifiP2pDevice device) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceChanged(device);
@@ -72,6 +79,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onConnectionInfoAvailable(WifiP2pInfo info) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onConnectionInfoAvailable(info);
@@ -79,6 +87,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceNameChanged(int state) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceNameChanged(state);
@@ -86,6 +95,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onGroupCreated(int state) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onGroupCreated(state);
@@ -93,6 +103,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onGroupRemoved(int state) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onGroupRemoved(state);
@@ -100,6 +111,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceConnected(WifiP2pDevice device) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceConnected(device);
@@ -107,6 +119,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceNotConnected(int reason) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceNotConnected(reason);
@@ -114,6 +127,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceDisconnected(WifiP2pDevice device) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceDisconnected(device);
@@ -121,6 +135,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onDeviceNotDisconnected(int reason) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onDeviceNotDisconnected(reason);
@@ -128,6 +143,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketServerStarted() {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketServerStarted();
@@ -135,6 +151,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketServerNewConnection(String host) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketServerNewConnection(host);
@@ -142,6 +159,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketServerConnectionClosed(String host, int code, String reason, boolean remote) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketServerConnectionClosed(host, code, reason, remote);
@@ -149,6 +167,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketServerMessage(String host, String message) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketServerMessage(host, message);
@@ -158,6 +177,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     //
 
     @Override
+    @CallSuper
     public void onPeersChanged(List<WifiP2pDevice> peers) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onPeersChanged(peers);
@@ -165,6 +185,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketClientOpened(String host) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketClientOpened(host);
@@ -172,6 +193,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketClientClosed(String host, int code, String reason, boolean remote) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketClientClosed(host, code, reason, remote);
@@ -179,6 +201,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onSocketClientMessage(String host, String message) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onSocketClientMessage(host, message);
@@ -186,6 +209,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     @Override
+    @CallSuper
     public void onConsoleLog(String message) {
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onConsoleLog(message);
