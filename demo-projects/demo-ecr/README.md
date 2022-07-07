@@ -34,9 +34,17 @@ allprojects {
 1.3 Add the below dependency into your app level `build.gradle` file.
 
 ```gradle
-implementation('com.github.aslamanver:p2p:1.1.5') {
-    exclude group: "com.google.code.gson"
-    exclude group: "org.java-websocket"
+configurations {
+    implementation {
+        exclude group: "com.google.code.gson"
+        exclude group: "org.java-websocket"
+    }
+}
+
+dependencies {
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
+    implementation 'com.google.code.gson:gson:2.2.4'
+    implementation('com.github.aslamanver:p2p:1.1.9')
 }
 ```
 
