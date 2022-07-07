@@ -6,7 +6,7 @@ publish {
     repoName = 'android'
     groupId = 'com.aslam'
     artifactId = 'p2p'
-    publishVersion = '1.1.8'
+    publishVersion = '1.1.9'
     desc = 'P2P library provides instant integration (PnP) support for WIFI-Direct P2P for any Android projects plus it remembers the recently connected device and reconnects it automatically when it is available.'
     website = 'https://github.com/aslamanver/p2p'
 }
@@ -18,8 +18,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 118
-        versionName "1.1.8"
+        versionCode 119
+        versionName "1.1.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
