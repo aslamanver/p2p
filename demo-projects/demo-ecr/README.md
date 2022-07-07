@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
 <hr/>
 
-[![Screenshot](/screenshots/1.gif)](#demonstration)
+[![Screenshot](https://github.com/aslamanver/p2p/blob/master/demo-projects/demo-ecr/screenshots/1.gif?raw=true)](#demonstration)
 
 Sample project and APK.
 
