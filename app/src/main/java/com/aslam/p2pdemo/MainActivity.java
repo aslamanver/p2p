@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(p2pController.isWebSocketClientConnected() ? "#008000" : "#FF0000")));
             }
 
-            p2pService.setActivityListener(new P2PControllerActivityListener() {
+            p2pService.addListener(new P2PControllerActivityListener() {
 
                 @Override
                 public void onPeersChanged(List<WifiP2pDevice> peers) {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        p2pService.setActivityListener(null);
+        p2pService.removeListener(null);
         unbindService(mConnection);
     }
 
