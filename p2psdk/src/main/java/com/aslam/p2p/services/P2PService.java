@@ -43,7 +43,11 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     }
 
     public void removeListener(P2PControllerListener controllerListener) {
-        controllerListeners.remove(controllerListener);
+        if (controllerListener == null) {
+            controllerListeners.clear();
+        } else {
+            controllerListeners.remove(controllerListener);
+        }
     }
 
     @Override
