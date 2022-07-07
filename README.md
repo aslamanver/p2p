@@ -2,7 +2,7 @@
 
 ![https://i.imgur.com/DHFGWtF.png](https://i.imgur.com/DHFGWtF.png)
 
-[ ![Download](https://api.bintray.com/packages/aslam/android/p2p/images/download.svg?version=1.0.7) ](https://bintray.com/aslam/android/p2p/1.0.7/link) [![](https://jitpack.io/v/aslamanver/p2p.svg)](https://jitpack.io/#aslamanver/p2p) [![Build Status](https://travis-ci.org/aslamanver/p2p.svg?branch=master)](https://travis-ci.org/aslamanver/p2p)
+[![](https://jitpack.io/v/aslamanver/p2p.svg)](https://jitpack.io/#aslamanver/p2p) [![Build Status](https://travis-ci.org/aslamanver/p2p.svg?branch=master)](https://travis-ci.org/aslamanver/p2p)
 
 Wi-Fi Direct (P2P) allows Android 4.0 (API level 14) and higher devices with the appropriate hardware to connect directly to each other via Wi-Fi without an intermediate access point.
 
@@ -24,7 +24,18 @@ allprojects {
 2. Add the below dependency into your module level `build.gradle` file.
 
 ```gradle
-implementation 'com.github.aslamanver:p2p:1.1.5'
+configurations {
+    implementation {
+        exclude group: "com.google.code.gson"
+        exclude group: "org.java-websocket"
+    }
+}
+
+dependencies {
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
+    implementation 'com.google.code.gson:gson:2.2.4'
+    implementation('com.github.aslamanver:p2p:1.1.9')
+}
 ```
 
 ### 1. Service Usage
