@@ -1,8 +1,6 @@
 package com.aslam.p2pdemo;
 
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            p2pService.setActivityListener(new P2PControllerActivityListener() {
+            p2pService.addListener(new P2PControllerActivityListener() {
 
                 @Override
                 public void onPeersChanged(List<WifiP2pDevice> peers) {
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         disconnectECR();
-        p2pService.setActivityListener(null);
+        p2pService.removeListener(null);
         unbindService(mConnection);
     }
 

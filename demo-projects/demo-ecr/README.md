@@ -44,7 +44,7 @@ configurations {
 dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.5.1"
     implementation 'com.google.code.gson:gson:2.2.4'
-    implementation('com.github.aslamanver:p2p:1.1.9')
+    implementation('com.github.aslamanver:p2p:1.2.5')
 }
 ```
 
