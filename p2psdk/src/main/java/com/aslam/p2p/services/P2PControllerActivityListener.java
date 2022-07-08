@@ -91,6 +91,6 @@ public abstract class P2PControllerActivityListener implements P2PControllerList
 
     @Override
     public void onConsoleLog(String message) {
-        LogUtils.consoleLog("P2PControllerActivityListener", message);
+
     }
 }

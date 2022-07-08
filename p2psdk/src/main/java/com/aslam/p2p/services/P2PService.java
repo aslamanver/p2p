@@ -7,6 +7,7 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import androidx.annotation.CallSuper;
 
 import com.aslam.p2p.R;
+import com.aslam.p2p.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,6 +212,7 @@ public class P2PService extends BaseForegroundService implements P2PControllerLi
     @Override
     @CallSuper
     public void onConsoleLog(String message) {
+        LogUtils.consoleLog("P2PService", message);
         for (P2PControllerListener controllerListener : controllerListeners) {
             controllerListener.onConsoleLog(message);
         }
